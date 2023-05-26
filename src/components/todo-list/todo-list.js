@@ -5,7 +5,7 @@ import "./todo-list.css";
 
 const TodoList = () => {
     return (
-        <ul className="app-list list-droup">
+        <ul className="app-list list-group">
             <TodoListItem/>
             <TodoListItem/>
             <TodoListItem/>
