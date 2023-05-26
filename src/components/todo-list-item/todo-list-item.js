@@ -1,10 +1,10 @@
 import "./todo-list-item.css";
 
-const TodoListItem = () => {
+const TodoListItem = ({todo, todoStatus}) => {
     return (
         <li className="list-group-item d-flex justify-content-between">
-            <span className="list-group-item-label">Проснутся</span>
-            <input type="text" className="list-group-item-input" defaultValue="100" />
+            <span className="list-group-item-label">{todo}</span>
+            <input type="text" className="list-group-item-input" defaultValue={todoStatus} />
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                     className="btn-cookie btn-sm ">
