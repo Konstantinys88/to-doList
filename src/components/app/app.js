@@ -4,29 +4,55 @@ import TodoFilter from "../todo-filter/todo-filter";
 import TodoList from "../todo-list/todo-list";
 import TodoAddForm from "../todo-add/todo-add";
 
+import { Component } from "react";
+
 import "./app.css";
 
-function App() {
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [
+                { todo: "Проснутся", todoStatus: 8, id: 1, increase: false },
+                { todo: "Покормить кота", todoStatus: 10, id: 2, increase: false },
+                { todo: "Погладить кота", todoStatus: 9, id: 3, increase: false },
+                { todo: "Убрать лоток кота", todoStatus: 9, id: 4, increase: false },
+            ]
+        }
+        this.maxId = 5;
+    }
 
-    const data = [
-        { todo: "Проснутся", todoStatus: 8, id: 1, increase: false },
-        { todo: "Покормить кота", todoStatus: 10, id: 2, increase: true },
-        { todo: "Погладить кота", todoStatus: 9, id: 3, increase: false },
-        { todo: "Убрать лоток кота", todoStatus: 9, id: 4, increase: false },
-    ];
+    addTodo = (todo, todoStatus) => {
+        const newTodo = {
+            todo,
+            todoStatus,
+            id: this.maxId++,
+            increase: false,
+        }
+        this.setState(({ data }) => {
+            const newArr = [...data, newTodo]; // в старый массив записываем новый обьект
+            return {
+                data: newArr
+            }
+        });
+    }
 
-    return (
-        <div className="app">
-            <ToDoHeader />
-            <div className="search-panel">
-                <SearchPanel />
-                <TodoFilter />
+    render() {
+        return (
+            <div className="app">
+                <ToDoHeader data={this.state.data} />
+                <div className="search-panel">
+                    <SearchPanel />
+                    <TodoFilter />
+                </div>
+                <TodoList data={this.state.data} />
+                <TodoAddForm onAdd={this.addTodo} />
             </div>
-            <TodoList data={data} />
-            <TodoAddForm />
-        </div>
-    );
+        );
+    }
 }
+
+
 
 export default App;
 
