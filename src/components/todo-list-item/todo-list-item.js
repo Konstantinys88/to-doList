@@ -1,31 +1,31 @@
-import { Component } from "react";
+// import { Component } from "react";
 import "./todo-list-item.css";
 
 
 
-class TodoListItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            increase: false,
-            like: false,
-        }
-    }
+const TodoListItem = (props) => {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         increase: false,
+    //         like: false,
+    //     }
+    // }
 
-    onIncrease = () => {
-        this.setState(({ increase }) => ({
-            increase: !increase
-        }))
-    }
+    // onIncrease = () => {
+    //     this.setState(({ increase }) => ({
+    //         increase: !increase
+    //     }))
+    // }
 
-    onLike = () => {
-        this.setState(({ like }) => ({ like: !like }))
-    }
+    // onLike = () => {
+    //     this.setState(({ like }) => ({ like: !like }))
+    // }
 
-    render() {
-        const { todo, todoStatus, onDelete } = this.props;
-        const { increase } = this.state;
-        const { like } = this.state;
+    
+        const { todo, todoStatus, onDelete, onToggleIncrease, onTogleLike, increase, like } = props;
+        // const { increase } = this.state;
+        // const { like } = this.state;
 
         let classNameLi = "list-group-item d-flex justify-content-between";
         if (increase) {
@@ -39,14 +39,14 @@ class TodoListItem extends Component {
             <li className={classNameLi}>
                 <span
                     className="list-group-item-label"
-                    onClick={this.onLike}>
+                    onClick={onTogleLike}>
                     {todo}
                 </span>
                 <input type="text" className="list-group-item-input" defaultValue={todoStatus} />
                 <div className='d-flex justify-content-center align-items-center'>
                     <button type="button"
                         className="btn-cookie btn-sm "
-                        onClick={this.onIncrease}>
+                        onClick={onToggleIncrease}>
                         <i className="fas fa-cookie"></i>
                     </button>
 
@@ -59,7 +59,7 @@ class TodoListItem extends Component {
                 </div>
             </li>
         );
-    }
+    
 }
 
 export default TodoListItem;

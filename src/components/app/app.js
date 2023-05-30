@@ -13,10 +13,10 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                { todo: "Проснутся", todoStatus: 8, id: 1, increase: false },
-                { todo: "Покормить кота", todoStatus: 10, id: 2, increase: false },
-                { todo: "Погладить кота", todoStatus: 9, id: 3, increase: false },
-                { todo: "Убрать лоток кота", todoStatus: 9, id: 4, increase: false },
+                { todo: "Проснутся", todoStatus: 8, id: 1, increase: false, like: true },
+                { todo: "Покормить кота", todoStatus: 10, id: 2, increase: true, like: false },
+                { todo: "Погладить кота", todoStatus: 9, id: 3, increase: false, like: false },
+                { todo: "Убрать лоток кота", todoStatus: 9, id: 4, increase: false, like: false },
             ]
         }
         this.maxId = 5;
@@ -28,6 +28,7 @@ class App extends Component {
             todoStatus,
             id: this.maxId++,
             increase: false,
+            like: false,
         }
         this.setState(({ data }) => {
             const newArr = [...data, newTodo]; // в старый массив записываем новый обьект
@@ -53,6 +54,40 @@ class App extends Component {
         })
     }
 
+    onToggleIncrease = (id) => {
+        //     Способ 1
+        // this.setState(({ data }) => {
+        //     const index = data.findIndex(elem => elem.id === id);
+        //     const old = data[index];
+        //     const newItem = { ...old, increase: !old.increase };
+        //     const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+        //     return {
+        //         data:newArr
+        //     }
+        // })
+
+        //     Способ 2
+        this.setState(({ data }) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return { ...item, increase: !item.increase }
+                }
+                return item;
+            })
+        }))
+    }
+
+    onTogleLike = (id) => {
+        this.setState(({ data }) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return { ...item, like: !item.like }
+                }
+                return item;
+            })
+        }))
+    }
+
     render() {
         return (
             <div className="app">
@@ -64,6 +99,8 @@ class App extends Component {
                 <TodoList
                     data={this.state.data}
                     onDelete={this.deleteTodo}
+                    onToggleIncrease={this.onToggleIncrease}
+                    onTogleLike={this.onTogleLike}
                 />
                 <TodoAddForm onAdd={this.addTodo} />
             </div>
