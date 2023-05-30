@@ -37,6 +37,22 @@ class App extends Component {
         });
     }
 
+    deleteTodo = (id) => {
+        this.setState(({ data }) => {
+            // Способ со склеиванием массива
+            // const index = data.findIndex(elem => elem.id === id);
+            // const before = data.slice(0, index);
+            // const after = data.slice(index + 1);
+            // const newArr = [...before, ...after];
+
+            return {
+                // data: newArr
+                // пособ с фильтрацией 
+                data: data.filter(item => item.id !== id)
+            }
+        })
+    }
+
     render() {
         return (
             <div className="app">
@@ -45,7 +61,10 @@ class App extends Component {
                     <SearchPanel />
                     <TodoFilter />
                 </div>
-                <TodoList data={this.state.data} />
+                <TodoList
+                    data={this.state.data}
+                    onDelete={this.deleteTodo}
+                />
                 <TodoAddForm onAdd={this.addTodo} />
             </div>
         );
