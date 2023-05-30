@@ -16,8 +16,10 @@ class App extends Component {
                 { todo: "Проснутся", todoStatus: 8, id: 1, increase: false, like: true },
                 { todo: "Покормить кота", todoStatus: 10, id: 2, increase: true, like: false },
                 { todo: "Погладить кота", todoStatus: 9, id: 3, increase: false, like: false },
-                { todo: "Убрать лоток кота", todoStatus: 9, id: 4, increase: false, like: false },
-            ]
+                { todo: "Убрать лоток кота", todoStatus: 6, id: 4, increase: false, like: false },
+            ],
+            term: "",
+            filter: "all",
         }
         this.maxId = 5;
     }
@@ -56,18 +58,18 @@ class App extends Component {
 
     // тоглит increase (для использования закоментироватб функцию onTogleProp и все ее вызовы, Раскоментировать onToggleIncrease и все его вызовы)
     // onToggleIncrease = (id) => {
-        //     Способ 1
-        // this.setState(({ data }) => {
-        //     const index = data.findIndex(elem => elem.id === id);
-        //     const old = data[index];
-        //     const newItem = { ...old, increase: !old.increase };
-        //     const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-        //     return {
-        //         data:newArr
-        //     }
-        // })
+    //     Способ 1
+    // this.setState(({ data }) => {
+    //     const index = data.findIndex(elem => elem.id === id);
+    //     const old = data[index];
+    //     const newItem = { ...old, increase: !old.increase };
+    //     const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+    //     return {
+    //         data:newArr
+    //     }
+    // })
 
-        //     Способ 2
+    //     Способ 2
     //     this.setState(({ data }) => ({
     //         data: data.map(item => {
     //             if (item.id === id) {
@@ -102,18 +104,51 @@ class App extends Component {
         }))
     }
 
+    searchEmp = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        }
+
+        return items.filter(item => {
+            return item.todo.indexOf(term) > -1;
+        })
+    }
+
+    onUpdateSearch = (term) => {
+        this.setState({ term: term })
+    }
+
+    filterPost = (items, filter) => {
+        switch (filter) {
+            case "like":
+                return items.filter(item => item.like);
+            case "todoStatus":
+                return items.filter(item => item.todoStatus > 7);
+            default:
+                return items;
+        }
+    }
+
+    onFilterSelect = (filter) => {
+        this.setState({filter})
+    }
+
+
     render() {
+        const { data, term, filter } = this.state;
         const employees = this.state.data.length;
         const incresed = this.state.data.filter(item => item.increase).length;
+        const visibleData = this.filterPost(this.searchEmp(data, term), filter);
+
         return (
             <div className="app">
                 <ToDoHeader employees={employees} increased={incresed} />
                 <div className="search-panel">
-                    <SearchPanel />
-                    <TodoFilter />
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+                    <TodoFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
                 </div>
                 <TodoList
-                    data={this.state.data}
+                    data={visibleData}
                     onDelete={this.deleteTodo}
                     // onToggleIncrease={this.onToggleIncrease}
                     // onTogleLike={this.onTogleLike}
