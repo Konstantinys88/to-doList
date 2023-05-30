@@ -18,10 +18,11 @@ class TodoAddForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        if(this.state.nameTodo < 2 || !this.state.numberInp) return;
         this.props.onAdd(this.state.nameTodo, this.state.numberInp);
         this.setState({
             nameTodo: '',
-            numberInp: ''
+            numberInp: '',
         })
     }
 

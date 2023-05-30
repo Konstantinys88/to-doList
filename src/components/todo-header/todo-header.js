@@ -1,12 +1,12 @@
 
 import "./todo-header.css"
 
-const ToDoHeader = ({data}) => {
+const ToDoHeader = ({ employees, increased }) => {
     return (
         <div className="toDo-header">
             <h1>Список дел</h1>
-            <h2>Количество дел: {data.length} </h2>
-            <h2>Дел сделано: </h2>
+            <h2>Количество дел: {employees} </h2>
+            <h2>Дел сделано: {increased} </h2>
         </div>
     )
 }

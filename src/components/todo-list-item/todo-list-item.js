@@ -23,7 +23,7 @@ const TodoListItem = (props) => {
     // }
 
     
-        const { todo, todoStatus, onDelete, onToggleIncrease, onTogleLike, increase, like } = props;
+        const { todo, todoStatus, onDelete, onToggleIncrease, onTogleLike, increase, like, onTogleProp } = props;
         // const { increase } = this.state;
         // const { like } = this.state;
 
@@ -39,14 +39,18 @@ const TodoListItem = (props) => {
             <li className={classNameLi}>
                 <span
                     className="list-group-item-label"
-                    onClick={onTogleLike}>
+                    // onClick={onTogleLike}
+                    onClick={onTogleProp}
+                    data-toggle="like">
                     {todo}
                 </span>
                 <input type="text" className="list-group-item-input" defaultValue={todoStatus} />
                 <div className='d-flex justify-content-center align-items-center'>
                     <button type="button"
                         className="btn-cookie btn-sm "
-                        onClick={onToggleIncrease}>
+                        // onClick={onToggleIncrease}
+                        onClick={onTogleProp}
+                        data-toggle="increase">
                         <i className="fas fa-cookie"></i>
                     </button>
 

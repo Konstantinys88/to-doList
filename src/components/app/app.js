@@ -54,7 +54,8 @@ class App extends Component {
         })
     }
 
-    onToggleIncrease = (id) => {
+    // тоглит increase (для использования закоментироватб функцию onTogleProp и все ее вызовы, Раскоментировать onToggleIncrease и все его вызовы)
+    // onToggleIncrease = (id) => {
         //     Способ 1
         // this.setState(({ data }) => {
         //     const index = data.findIndex(elem => elem.id === id);
@@ -67,21 +68,34 @@ class App extends Component {
         // })
 
         //     Способ 2
-        this.setState(({ data }) => ({
-            data: data.map(item => {
-                if (item.id === id) {
-                    return { ...item, increase: !item.increase }
-                }
-                return item;
-            })
-        }))
-    }
+    //     this.setState(({ data }) => ({
+    //         data: data.map(item => {
+    //             if (item.id === id) {
+    //                 return { ...item, increase: !item.increase }
+    //             }
+    //             return item;
+    //         })
+    //     }))
+    // }
 
-    onTogleLike = (id) => {
+    // тоглит Like (для использования закоментироватб функцию onTogleProp и все ее вызовы, Раскоментировать onTogleLike и все его вызовы)
+    // onTogleLike = (id) => {
+    //     this.setState(({ data }) => ({
+    //         data: data.map(item => {
+    //             if (item.id === id) {
+    //                 return { ...item, like: !item.like }
+    //             }
+    //             return item;
+    //         })
+    //     }))
+    // }
+
+    // тоглит Like И increase
+    onTogleProp = (id, prop) => {
         this.setState(({ data }) => ({
             data: data.map(item => {
                 if (item.id === id) {
-                    return { ...item, like: !item.like }
+                    return { ...item, [prop]: !item[prop] }
                 }
                 return item;
             })
@@ -89,9 +103,11 @@ class App extends Component {
     }
 
     render() {
+        const employees = this.state.data.length;
+        const incresed = this.state.data.filter(item => item.increase).length;
         return (
             <div className="app">
-                <ToDoHeader data={this.state.data} />
+                <ToDoHeader employees={employees} increased={incresed} />
                 <div className="search-panel">
                     <SearchPanel />
                     <TodoFilter />
@@ -99,8 +115,9 @@ class App extends Component {
                 <TodoList
                     data={this.state.data}
                     onDelete={this.deleteTodo}
-                    onToggleIncrease={this.onToggleIncrease}
-                    onTogleLike={this.onTogleLike}
+                    // onToggleIncrease={this.onToggleIncrease}
+                    // onTogleLike={this.onTogleLike}
+                    onTogleProp={this.onTogleProp}
                 />
                 <TodoAddForm onAdd={this.addTodo} />
             </div>
